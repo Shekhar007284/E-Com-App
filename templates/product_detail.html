@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}{{ product.name }}{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-md-6">
+        <h2>{{ product.name }}</h2>
+        <p class="text-muted">{{ product.category }}</p>
+        <p>{{ product.description }}</p>
+        <h4 class="fw-bold">₹{{ "%.2f"|format(product.price) }}</h4>
+        <p id="stock-info" class="{% if product.stock == 0 %}text-danger{% else %}text-success{% endif %}">
+            {% if product.stock == 0 %}Out of stock{% else %}{{ product.stock }} in stock{% endif %}
+        </p>
+
+        {% if current_user.is_authenticated %}
+        {% if product.stock > 0 %}
+        <form method="POST" action="{{ url_for('add_to_cart', product_id=product.id) }}" id="add-to-cart-form">
+            <div class="mb-3" style="max-width: 150px;">
+                <label class="form-label">Quantity</label>
+                <input type="number" class="form-control" name="quantity" id="quantity-input" value="1" min="1" max="{{ product.stock }}">
+            </div>
+            <button type="submit" class="btn btn-success" id="add-to-cart-btn">Add to Cart</button>
+        </form>
+        {% endif %}
+        {% else %}
+        <p><a href="{{ url_for('login') }}">Login</a> to add this to your cart.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
