@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}My Orders{% endblock %}
+{% block content %}
+<h2 class="mb-4">My Orders</h2>
+
+{% if orders %}
+<div id="orders-list">
+    {% for order in orders %}
+    <div class="card mb-3" data-order-id="{{ order.id }}">
+        <div class="card-body">
+            <h5 class="card-title">Order #{{ order.id }} — {{ order.status }}</h5>
+            <p class="text-muted small">Placed: {{ order.created_at.strftime('%d %b %Y, %I:%M %p') }}</p>
+            {% if order.coupon_code %}
+            <p class="small">Coupon applied: {{ order.coupon_code }}</p>
+            {% endif %}
+            <table class="table table-sm">
+                <thead><tr><th>Product</th><th>Qty</th><th>Price</th></tr></thead>
+                <tbody>
+                    {% for item in order.items %}
+                    <tr>
+                        <td>{{ item.product.name }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>₹{{ "%.2f"|format(item.price_at_purchase) }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <h6>Total: ₹{{ "%.2f"|format(order.total) }}</h6>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p id="no-orders-message">You haven't placed any orders yet.</p>
+<a href="{{ url_for('products') }}" class="btn btn-primary">Browse Products</a>
+{% endif %}
+{% endblock %}
