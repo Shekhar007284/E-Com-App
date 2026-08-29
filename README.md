@@ -26,6 +26,7 @@ This downloads Chromium, Firefox, and WebKit — might take a minute or two depe
 3)Verify it worked:
   |-- playwright --version
 
+------------------------LOG DEFECTS IN AZURE BOARD---------------------------------------------------------------------------------------------------------
 
 
                                                  
