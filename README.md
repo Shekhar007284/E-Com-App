@@ -61,5 +61,23 @@ This downloads Chromium, Firefox, and WebKit — might take a minute or two depe
 
 3)Verify it worked:
   |-- playwright --version
+Running the project locally
+bash
+git clone https://github.com/Shekhar007284/E-Com-App.git
+cd E-Com-App
+python -m venv venv
+venv\Scripts\Activate.ps1        # Windows
+pip install -r requirements.txt
+mkdir instance
+python seed.py
+python app.py
 
+App runs at http://127.0.0.1:5000. Admin login: admin / admin123.
+
+To run the test suite (with the app running in a separate terminal):
+
+bash
+pip install playwright pytest-playwright pytest-html
+playwright install
+pytest tests/ -v
                                                  
